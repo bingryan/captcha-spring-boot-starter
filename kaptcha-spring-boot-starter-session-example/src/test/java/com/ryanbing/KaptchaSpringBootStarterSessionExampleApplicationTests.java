@@ -1,4 +1,4 @@
-package com.ryan;
+package com.ryanbing;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

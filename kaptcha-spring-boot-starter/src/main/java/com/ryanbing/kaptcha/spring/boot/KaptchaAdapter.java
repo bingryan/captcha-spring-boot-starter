@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Adapter for kaptcha
  *
- * @author ryan
+ * @author ryanbing
  **/
 interface KaptchaAdapter {
 

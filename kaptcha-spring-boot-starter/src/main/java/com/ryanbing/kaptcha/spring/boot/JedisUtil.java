@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

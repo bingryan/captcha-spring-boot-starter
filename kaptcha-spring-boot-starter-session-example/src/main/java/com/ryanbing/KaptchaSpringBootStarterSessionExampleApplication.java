@@ -1,12 +1,12 @@
-package com.ryan;
+package com.ryanbing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KaptchaSpringBootStarterRedisExampleApplication {
+public class KaptchaSpringBootStarterSessionExampleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KaptchaSpringBootStarterRedisExampleApplication.class, args);
+        SpringApplication.run(KaptchaSpringBootStarterSessionExampleApplication.class, args);
     }
 }

@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -13,13 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static com.ryan.kaptcha.spring.boot.SessionUtil.getSessionAttribute;
-import static com.ryan.kaptcha.spring.boot.SessionUtil.setSessionAttribute;
-
 /**
  * session store captcha
  *
- * @author ryan
+ * @author ryanbing
  **/
 public class SessionKaptcha implements KaptchaAdapter {
 
@@ -65,9 +62,9 @@ public class SessionKaptcha implements KaptchaAdapter {
 
         // create the text for the image
         String capText = this.kaptchaProducer.createText();
-        setSessionAttribute(req, resp, this.sessionKeyValue, capText);
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyValue, capText);
 
-        setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
 
         BufferedImage bi = this.kaptchaProducer.createImage(capText);
         ServletOutputStream out = resp.getOutputStream();
@@ -79,8 +76,8 @@ public class SessionKaptcha implements KaptchaAdapter {
     public void setCaptcha(HttpServletRequest req, HttpServletResponse resp, String captchaText) throws IOException {
         Assert.notNull(captchaText, "captchaText must not be null");
 
-        setSessionAttribute(req, resp, this.sessionKeyValue, captchaText);
-        setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyValue, captchaText);
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
         ServletOutputStream out = resp.getOutputStream();
@@ -94,9 +91,9 @@ public class SessionKaptcha implements KaptchaAdapter {
         this.sessionKeyValue = keyValue;
         this.sessionKeyDateValue = keyDateValue;
 
-        setSessionAttribute(req, resp, this.sessionKeyValue, capText);
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyValue, capText);
 
-        setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
 
         BufferedImage bi = this.kaptchaProducer.createImage(capText);
         ServletOutputStream out = resp.getOutputStream();
@@ -110,8 +107,8 @@ public class SessionKaptcha implements KaptchaAdapter {
 
         this.sessionKeyValue = keyValue;
         this.sessionKeyDateValue = keyDateValue;
-        setSessionAttribute(req, resp, this.sessionKeyValue, captchaText);
-        setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyValue, captchaText);
+        SessionUtil.setSessionAttribute(req, resp, this.sessionKeyDateValue, System.currentTimeMillis());
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
         ServletOutputStream out = resp.getOutputStream();
@@ -122,8 +119,8 @@ public class SessionKaptcha implements KaptchaAdapter {
     public boolean validCaptcha(HttpServletRequest request, String captcha) {
         Assert.notNull(captcha, "captcha must not be null");
 
-        String sessionValue = (String) getSessionAttribute(request, this.sessionKeyValue);
-        Long sessionDataValue = (Long) getSessionAttribute(request, this.sessionKeyDateValue);
+        String sessionValue = (String) SessionUtil.getSessionAttribute(request, this.sessionKeyValue);
+        Long sessionDataValue = (Long) SessionUtil.getSessionAttribute(request, this.sessionKeyDateValue);
 
         if (StringUtils.isEmpty(sessionDataValue)) {
             return false;

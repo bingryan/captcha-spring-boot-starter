@@ -1,13 +1,13 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Properties;
 
-import static com.ryan.kaptcha.spring.boot.KaptchaProperties.KAPTCHA_PREFIX;
+import static com.ryanbing.kaptcha.spring.boot.KaptchaProperties.KAPTCHA_PREFIX;
 
 /**
- * @author ryan
+ * @author ryanbing
  **/
 
 @ConfigurationProperties(prefix = KAPTCHA_PREFIX)

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ryan.kaptcha.spring.boot.KaptchaAutoConfiguration
+  com.ryanbing.kaptcha.spring.boot.KaptchaAutoConfiguration

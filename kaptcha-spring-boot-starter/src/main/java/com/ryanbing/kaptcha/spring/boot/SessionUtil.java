@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author ryan
+ * @author ryanbing
  **/
 class SessionUtil {
 

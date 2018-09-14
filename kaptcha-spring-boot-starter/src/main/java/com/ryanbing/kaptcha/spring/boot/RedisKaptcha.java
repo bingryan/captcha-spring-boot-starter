@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -14,12 +14,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.UUID;
 
-import static com.ryan.kaptcha.spring.boot.SessionUtil.*;
-
 /**
  * Redis store
  *
- * @author ryan
+ * @author ryanbing
  **/
 public class RedisKaptcha implements KaptchaAdapter {
 
@@ -68,7 +66,7 @@ public class RedisKaptcha implements KaptchaAdapter {
 
         // create the text for the image
         String capText = this.kaptchaProducer.createText();
-        setRedisAttribute(response, this.redisKeyValue, capText, this.redisKeyTimeout);
+        SessionUtil.setRedisAttribute(response, this.redisKeyValue, capText, this.redisKeyTimeout);
 
         BufferedImage bi = this.kaptchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
@@ -87,7 +85,7 @@ public class RedisKaptcha implements KaptchaAdapter {
         this.redisKeyDateValue = uuid + DEFAULT_KEY_DATE_VALUE;
 
         // create the text for the image
-        setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
+        SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
         ServletOutputStream out = response.getOutputStream();
@@ -104,7 +102,7 @@ public class RedisKaptcha implements KaptchaAdapter {
         String captchaText = this.kaptchaProducer.createText();
 
 
-        setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
+        SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
         ServletOutputStream out = response.getOutputStream();
@@ -118,7 +116,7 @@ public class RedisKaptcha implements KaptchaAdapter {
 
         this.redisKeyValue = keyValue;
         this.redisKeyDateValue = keyDateValue;
-        setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
+        SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
         ServletOutputStream out = response.getOutputStream();
@@ -129,7 +127,7 @@ public class RedisKaptcha implements KaptchaAdapter {
 
     public boolean validCaptcha(HttpServletRequest request, String captcha) {
 
-        String redisValue = (String) getRedisAttribute(this.redisKeyValue);
+        String redisValue = (String) SessionUtil.getRedisAttribute(this.redisKeyValue);
 
         return !StringUtils.isEmpty(redisValue);
     }

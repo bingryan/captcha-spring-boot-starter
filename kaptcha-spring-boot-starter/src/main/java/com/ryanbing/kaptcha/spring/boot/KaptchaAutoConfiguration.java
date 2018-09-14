@@ -1,4 +1,4 @@
-package com.ryan.kaptcha.spring.boot;
+package com.ryanbing.kaptcha.spring.boot;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * KaptchaAutoConfiguration
  *
- * @author ryan
+ * @author ryanbing
  **/
 
 @Configuration
