@@ -2,15 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>captcha-spring-boot-starter</artifactId>
-        <groupId>com.ryanbing</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.ryanbing</groupId>
     <artifactId>kaptcha-spring-boot-starter</artifactId>
+    <version>1.0.0.RELEASE</version>
+    <description>kaptcha spring boot starter</description>
+
     <packaging>jar</packaging>
+    <url>https://github.com/ycvbcvfu/captcha-spring-boot-starter</url>
+    <name>kaptcha-spring-boot-starter</name>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>ryanbing</name>
+            <email>ycvbcvfu@qq.com</email>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <!-- project -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,13 +41,13 @@
         <!-- dependencies -->
         <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 
-        <!-- plugins -->
-        <!--<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>-->
-        <!--<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>-->
-        <!--<maven-source-plugin.version>3.0.1</maven-source-plugin.version>-->
-        <!--<maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>-->
-        <!--<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>-->
+         <!--plugins-->
+        <version.compiler-plugin>3.5.1</version.compiler-plugin>
+        <version.source-plugin>2.2.1</version.source-plugin>
+        <version.javadoc-plugin>2.9.1</version.javadoc-plugin>
+        <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
     </properties>
+
 
     <dependencies>
 
@@ -62,11 +81,6 @@
             <version>${jedis.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -81,4 +95,86 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ryanbing</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ryanbing</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+
+    <profiles>
+        <profile>
+            <id>ryanbing</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${version.compiler-plugin}</version>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                            <compilerVersion>${java.version}</compilerVersion>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${version.source-plugin}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${version.javadoc-plugin}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ryanbing</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ryanbing</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
