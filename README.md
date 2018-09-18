@@ -1,6 +1,6 @@
 # Kaptcha Spring boot starter
 
-Very simple way to use [Kaptcha](https://github.com/penggle/kaptcha).and 
+Very simple way to use [Kaptcha](http://code.google.com/p/kaptcha/).and 
 you can use session and redis to store captcha information.
 ## Installation and Getting Started
 
