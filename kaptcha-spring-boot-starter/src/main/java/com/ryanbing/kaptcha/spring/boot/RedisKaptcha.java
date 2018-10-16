@@ -30,17 +30,20 @@ public class RedisKaptcha implements KaptchaAdapter {
     private long redisKeyTimeout = DEFAULT_TIME_OUT;
 
 
+    @Override
     public void init() {
         if (StringUtils.isEmpty(kaptchaProducer)) {
             this.kaptchaProducer = new DefaultKaptcha();
         }
     }
 
+    @Override
     public void init(Config config, long timeout) {
         this.kaptchaProducer = config.getProducerImpl();
         this.redisKeyTimeout = timeout;
     }
 
+    @Override
     public void init(String keyValue, String keyDateValue, long timeout) {
         if (StringUtils.isEmpty(kaptchaProducer)) {
             this.kaptchaProducer = new DefaultKaptcha();
@@ -50,6 +53,7 @@ public class RedisKaptcha implements KaptchaAdapter {
         this.redisKeyTimeout = timeout;
     }
 
+    @Override
     public void init(Producer producer, String keyValue, String keyDateValue, long timeout) {
         this.kaptchaProducer = producer;
         this.redisKeyValue = keyValue;
@@ -57,65 +61,39 @@ public class RedisKaptcha implements KaptchaAdapter {
         this.redisKeyTimeout = timeout;
     }
 
+    @Override
     public void setCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String s = request.getRequestURL().toString() + String.valueOf(System.currentTimeMillis());
-        UUID uuid = UUID.nameUUIDFromBytes(s.getBytes("UTF-8"));
-
-        this.redisKeyValue = uuid + DEFAULT_KEY_VALUE;
-        this.redisKeyDateValue = uuid + DEFAULT_KEY_DATE_VALUE;
-
-        // create the text for the image
-        String capText = this.kaptchaProducer.createText();
-        SessionUtil.setRedisAttribute(response, this.redisKeyValue, capText, this.redisKeyTimeout);
-
-        BufferedImage bi = this.kaptchaProducer.createImage(capText);
-        ServletOutputStream out = response.getOutputStream();
-
-        // write the data out
-        ImageIO.write(bi, "jpg", out);
-
-
+        setCaptcha(request, response, this.kaptchaProducer.createText());
     }
 
+    @Override
     public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String captchaText) throws IOException {
+        setCaptcha(request, response, null, null, captchaText);
+    }
+
+    @Override
+    public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String keyValue, String keyDateValue) throws IOException {
+        setCaptcha(request, response, keyValue, keyDateValue, this.kaptchaProducer.createText());
+    }
+
+    @Override
+    public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String keyValue, String keyDateValue, String captchaText) throws IOException {
+
+
+        Assert.notNull(captchaText, "captcha must not be null");
         String s = request.getRequestURL().toString() + String.valueOf(System.currentTimeMillis());
         UUID uuid = UUID.nameUUIDFromBytes(s.getBytes("UTF-8"));
 
-        this.redisKeyValue = uuid + DEFAULT_KEY_VALUE;
-        this.redisKeyDateValue = uuid + DEFAULT_KEY_DATE_VALUE;
-
-        // create the text for the image
-        SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
-
-        BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
-        ServletOutputStream out = response.getOutputStream();
-
-        // write the data out
-        ImageIO.write(bi, "jpg", out);
-    }
-
-    public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String keyValue, String keyDateValue) throws IOException {
         this.redisKeyValue = keyValue;
         this.redisKeyDateValue = keyDateValue;
 
-        // create the text for the image
-        String captchaText = this.kaptchaProducer.createText();
+        if (keyValue == null) {
+            this.redisKeyValue = uuid + DEFAULT_KEY_VALUE;
+        }
+        if (keyDateValue == null) {
+            this.redisKeyDateValue = uuid + DEFAULT_KEY_DATE_VALUE;
+        }
 
-
-        SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
-
-        BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
-        ServletOutputStream out = response.getOutputStream();
-
-        // write the data out
-        ImageIO.write(bi, "jpg", out);
-    }
-
-    public void setCaptcha(HttpServletRequest request, HttpServletResponse response, String keyValue, String keyDateValue, String captchaText) throws IOException {
-        Assert.notNull(captchaText, "captcha must not be null");
-
-        this.redisKeyValue = keyValue;
-        this.redisKeyDateValue = keyDateValue;
         SessionUtil.setRedisAttribute(response, this.redisKeyValue, captchaText, this.redisKeyTimeout);
 
         BufferedImage bi = this.kaptchaProducer.createImage(captchaText);
@@ -125,10 +103,14 @@ public class RedisKaptcha implements KaptchaAdapter {
 
     }
 
+    @Override
     public boolean validCaptcha(HttpServletRequest request, String captcha) {
 
         String redisValue = (String) SessionUtil.getRedisAttribute(this.redisKeyValue);
 
-        return !StringUtils.isEmpty(redisValue);
+        if (redisValue == null) {
+            return false;
+        }
+        return redisValue.equals(captcha);
     }
 }

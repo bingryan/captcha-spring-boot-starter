@@ -27,7 +27,7 @@ public class KaptchaAutoConfiguration {
         Config config = new Config(kaptchaProperties.getProperties());
 
         SessionKaptcha sessionKaptcha = new SessionKaptcha();
-
+        
         sessionKaptcha.init(config, timeout);
         return sessionKaptcha;
     }

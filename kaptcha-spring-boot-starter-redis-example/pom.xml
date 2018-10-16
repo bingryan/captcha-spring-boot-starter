@@ -5,7 +5,7 @@
 
     <groupId>com.ryanbing</groupId>
     <artifactId>kaptcha-spring-boot-starter-redis-example</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.1.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>kaptcha-spring-boot-starter-redis-example</name>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.ryanbing</groupId>
             <artifactId>kaptcha-spring-boot-starter</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <version>1.0.1.RELEASE</version>
         </dependency>
     </dependencies>
 
