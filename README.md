@@ -9,7 +9,7 @@ you can use session and redis to store captcha information.
 <dependency>
     <groupId>com.ryanbing</groupId>
     <artifactId>kaptcha-spring-boot-starter</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.1.RELEASE</version>
 </dependency>
 ```
 
