@@ -106,6 +106,7 @@ public class SessionKaptcha implements KaptchaAdapter {
 
         String sessionValue = (String) SessionUtil.getSessionAttribute(request, this.sessionKeyValue);
         Long sessionDataValue = (Long) SessionUtil.getSessionAttribute(request, this.sessionKeyDateValue);
+        request.getSession().setAttribute(this.sessionKeyDateValue, 0L);
 
         if (StringUtils.isEmpty(sessionDataValue)) {
             return false;
